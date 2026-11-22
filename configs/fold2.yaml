@@ -1,5 +1,5 @@
 # MotionR_S (AnatomyMotion4DNet, variant M4).
-# Published fold 2.
+# MotionR_S, fold 2.
 model:
   name: AnatomyMotion4DNet
   variant: M4
@@ -114,8 +114,8 @@ batching:
 training:
   epochs: 120
   optimizer: AdamW
-  encoder_lr: 1.0e-4
-  new_module_lr: 3.0e-4
+  encoder_lr: 3.0e-5
+  new_module_lr: 9.0e-5
   weight_decay: 1.0e-4
   scheduler: cosine
   warmup_epochs: 5

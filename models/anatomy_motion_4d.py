@@ -338,7 +338,7 @@ class AnatomyMotion4DNet(nn.Module):
         return local, global_map, index
 
     def _pool_global(self, global_valid, volumes_valid, index, batch, steps):
-        """Global anatomy pool. Optional sector-weighted mean (A2); default stays GAP."""
+        """Global anatomy pool. Optional sector-weighted mean; default stays GAP."""
         if self.use_sector_mask_global:
             sector = sector_at_resolution(volumes_valid, global_valid.shape[-3:])
             weight = sector / sector.sum(dim=(-3, -2, -1), keepdim=True).clamp_min(1e-6)

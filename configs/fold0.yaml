@@ -1,5 +1,5 @@
 # MotionR_S (AnatomyMotion4DNet, variant M4).
-# Published fold 0. Encoder and new-module learning rates are 0.3 times folds 1 and 2.
+# MotionR_S, fold 0.
 model:
   name: AnatomyMotion4DNet
   variant: M4

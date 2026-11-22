@@ -35,7 +35,7 @@ class SpatialAttentionPool3d(nn.Module):
     def forward(self, features, sector=None, return_map=False):
         """features: [N, C, D, H, W]. Attention is normalized over D*H*W.
 
-        Optional ``sector`` [N, 1, D, H, W] matches P-arm FOV prior:
+        Optional ``sector`` [N, 1, D, H, W] is a field-of-view prior:
         logits += log(sector); sector==0 locations are masked out.
         """
         if features.numel() == 0:

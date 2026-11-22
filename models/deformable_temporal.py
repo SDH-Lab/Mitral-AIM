@@ -3,8 +3,8 @@
 Default MotionR_S keeps dense ``TemporalEncoder`` + linear ``map_motion_to_state``.
 These modules are only constructed when config selects:
 
-* ``temporal_mixer=deform_attn`` — vanilla self-DeformAttn over state tokens (#2)
-* ``motion_align=cross_deform`` — CrossDeform from state queries into motion memory (#4)
+* ``temporal_mixer=deform_attn`` — self deformable attention over state tokens
+* ``motion_align=cross_deform`` — deformable attention from state queries into motion memory
 """
 from __future__ import absolute_import
 from __future__ import division
