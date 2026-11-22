@@ -1,6 +1,8 @@
 # Mitral-AIM
 
-4D TEE classification of clinically significant mitral regurgitation. One sample is one cardiac cycle, resampled to 64×64×64.
+Anatomy–Motion Learning with Diagnostically Informative Interval Discovery for Mitral Regurgitation Detection from B-Mode 4D TEE.
+
+One sample is one cardiac cycle, resampled to 64×64×64.
 
 ## Installation
 
