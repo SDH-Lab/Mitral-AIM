@@ -1,0 +1,132 @@
+# MotionR_S (AnatomyMotion4DNet, variant M4).
+# Published fold 1.
+model:
+  name: AnatomyMotion4DNet
+  variant: M4
+
+input:
+  volume_size: [64, 64, 64]
+  # Applied in ResNet3D18Features.normalize: (x - 0.15) / 0.25
+  intensity_mean: 0.15
+  intensity_std: 0.25
+
+spatial_encoder:
+  architecture: resnet3d18_scratch
+  local_layer: layer2
+  global_layer: layer4
+  pretrained: false
+  checkpoint_encoder: true
+  encoder_chunk: 8
+
+local_anatomy:
+  pooling: attention
+  attention_hidden: 64
+  output_dim: 256
+
+spatial_prior:
+  use_sector_mask: true
+  use_sector_mask_global: false
+
+appearance_motion:
+  use_stem_frame_diff: false
+  stem_diff_mode: abs
+
+global_anatomy:
+  input_channels: 512
+  output_dim: 256
+
+state_token:
+  input_dim: 512
+  output_dim: 256
+
+state_transformer:
+  d_model: 256
+  nhead: 4
+  num_layers: 2
+  dim_feedforward: 512
+  dropout: 0.10
+  activation: gelu
+  norm_first: true
+
+time_encoding:
+  max_cycles: 32
+
+temporal_options:
+  temporal_mixer: dense
+  motion_align: linear
+  deform_n_points: 4
+
+spatial_transition:
+  representation: full
+  hidden_channels: 256
+  output_channels: 256
+  dropout: 0.10
+  normalization: GroupNorm
+  chunk: 8
+
+transition_attention:
+  pooling: attention
+  attention_hidden: 64
+  output_dim: 256
+
+motion_branch:
+  use_raw_difference: true
+  use_feature_transition: false
+
+motion_transformer:
+  d_model: 256
+  nhead: 4
+  num_layers: 2
+  dim_feedforward: 512
+  dropout: 0.10
+  activation: gelu
+  norm_first: true
+
+selector_fusion:
+  input_dim: 512
+  output_dim: 256
+  dropout: 0.10
+
+interval_selector:
+  hidden_dim: 128
+  dropout: 0.10
+
+classifier:
+  input_dim: 768
+  hidden_dim: 256
+  dropout: 0.20
+
+loss:
+  type: BCEWithLogitsLoss
+  pos_weight: null
+  lambda_interval_entropy: 0.0
+  lambda_phase_length: 0.0
+  min_phase_ratio: 0.05
+  max_phase_ratio: 0.80
+  aux_start_epoch: 10
+
+batching:
+  length_bucket: true
+  max_valid_volumes_per_physical_batch: 80
+  target_effective_patient_batch_size: 8
+  bucket_width: 8
+
+training:
+  epochs: 120
+  optimizer: AdamW
+  encoder_lr: 1.0e-4
+  new_module_lr: 3.0e-4
+  weight_decay: 1.0e-4
+  scheduler: cosine
+  warmup_epochs: 5
+  gradient_clip_norm: 1.0
+  early_stopping_patience: 50
+  selection_metric: val_AUROC
+  seed: 42
+
+data:
+  manifest: /PATH/TO/folds.csv
+  cache: /PATH/TO/cache_64_all_v1
+  fold: 1
+  num_workers: 2
+  augment: true

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+runs/
+cache/
+*.npy
+*.pt
+*.mha
+*.nii
+*.nii.gz
+tests/_tmp_spatial_export/

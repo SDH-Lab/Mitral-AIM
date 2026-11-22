@@ -1,0 +1,5 @@
+patient_id,file_name,mr_severity,binary,three_class,fold
+EXAMPLE0001,CLIP_A,1,0,0,0
+EXAMPLE0001,CLIP_B,1,0,0,0
+EXAMPLE0002,CLIP_C,3,1,2,1
+EXAMPLE0003,CLIP_D,4,1,2,2
